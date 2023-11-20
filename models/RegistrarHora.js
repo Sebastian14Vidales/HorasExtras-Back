@@ -13,11 +13,15 @@ const registrarHorasSchema = mongoose.Schema({
     },
     fechaHoraInicio: {
         type: Date,
-        default: Date.now(),
+        trim:true,
+        required: true,
+        // default: Date.now(),
     },
     fechaHoraFin: {
         type: Date,
-        default: Date.now(),
+        trim:true,
+        required: true,
+        // default: Date.now(),
     },
     creador: {
         type: mongoose.Schema.Types.ObjectId,
