@@ -23,6 +23,10 @@ const registrarHorasSchema = mongoose.Schema({
         required: true,
         // default: Date.now(),
     },
+    horasTotal: {
+        type: Number,
+        trim: true
+    },
     creador: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario'

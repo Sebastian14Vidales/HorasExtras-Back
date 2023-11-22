@@ -9,7 +9,7 @@ const obtenerHorasExtras = async (request, response) => { //Para cuando el usuar
     response.json(horasExtras);
 }
 const nuevaHoraExtra = async (request, response) => { //Cuando el usuario quiera crear una hora extra
-    
+    console.log(request.body);
     const horaExtra = new RegistrarHora(request.body);
     horaExtra.creador = request.usuario._id;
 
