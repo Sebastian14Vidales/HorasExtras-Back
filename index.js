@@ -17,7 +17,6 @@ const whiteList =[process.env.FRONTEND_URL]; //Que este localhost 4000 permita p
 
 const corsOptions = {
     origin: function(origin, callback) {
-        console.log("ORIGIN: ",origin);
         
         if(!origin || whiteList.includes(origin)) {
             // Puede consultar la API
@@ -38,7 +37,32 @@ app.use('/api/horasextras', horasRoutes);
 
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
+const servidor = app.listen(PORT, () => {
     console.log(`Consola corriendo en el puerto ${PORT}`);
     
+})
+
+// Socket.io
+import { Server } from "socket.io"
+
+const io = new Server(servidor, {
+    pingTimeout: 60000,
+    cors: {
+        origin: process.env.FRONTEND_URL,
+    },
+});
+
+io.on('connection', (socket) => {
+    console.log('Conectado a socket.io');
+    socket.on("ver_registro", (IdUser) => {
+        console.log("Desde id_User: ",IdUser);
+        socket.join(IdUser)        
+    })
+
+    socket.on('nueva_hora', (hora) => {
+        console.log("NUEVA HORA:", hora);
+        console.log("CREADOR HORA:", hora.creador);
+        
+        io.to("6578cd23bf4e2977e569dd7b").emit('hora_agregada', hora);
+    })
 })

@@ -1,7 +1,7 @@
 import RegistrarHora from "../models/RegistrarHora.js";
 
 const obtenerTodasHorasExtras = async (request, response) => { //Para cuando el admin quiera ver todas la lista de las horas extras
-    const horasExtras = await RegistrarHora.find();
+    const horasExtras = await RegistrarHora.find().populate('creador', 'nombre');
     response.json(horasExtras);
 }
 const obtenerHorasExtras = async (request, response) => { //Para cuando el usuario quiera ver todas las horas extras de el usuario JUAN
@@ -57,10 +57,11 @@ const editarHoraExtra = async (request, response) => { //para cuando el usuario 
             return response.status(401).json({ msg: error.message })
         }
 
-        horasExtras.nombre = request.body.nombre || horasExtras.nombre;
+        horasExtras.asunto = request.body.asunto || horasExtras.asunto;
         horasExtras.descripcion = request.body.descripcion || horasExtras.descripcion;
         horasExtras.fechaHoraInicio = request.body.fechaHoraInicio || horasExtras.fechaHoraInicio;
         horasExtras.fechaHoraFin = request.body.fechaHoraFin || horasExtras.fechaHoraFin;
+        horasExtras.horasTotal = request.body.horasTotal || horasExtras.horasTotal;
 
         try {
             const horasExtrasAlmacenadas = await horasExtras.save();
