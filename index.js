@@ -56,8 +56,7 @@ io.on('connection', (socket) => {
     console.log('Conectado a socket.io');
     socket.on("ver_registro", (IdUser) => {
         console.log("Desde id_User: ",IdUser);
-        socket.join(IdUser)        
-        // socket.join(IdUser)        
+        socket.join(IdUser)              
     })
 
     socket.on('nueva_hora', (hora) => {
