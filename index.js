@@ -57,12 +57,21 @@ io.on('connection', (socket) => {
     socket.on("ver_registro", (IdUser) => {
         console.log("Desde id_User: ",IdUser);
         socket.join(IdUser)        
+        // socket.join(IdUser)        
     })
 
     socket.on('nueva_hora', (hora) => {
         console.log("NUEVA HORA:", hora);
         console.log("CREADOR HORA:", hora.creador);
         
-        io.to("6578cd23bf4e2977e569dd7b").emit('hora_agregada', hora);
+        io.to("6578cd23bf4e2977e569dd7b").to(hora.creador).emit('hora_agregada', hora);
+    })
+
+    socket.on('eliminar_hora', (hora) => {
+        io.to("6578cd23bf4e2977e569dd7b").to(hora.creador).emit('hora_eliminada', hora)
+    })
+
+    socket.on('editar_hora', (hora) => {
+        io.to("6578cd23bf4e2977e569dd7b").to(hora.creador).emit('hora_editada', hora)
     })
 })
