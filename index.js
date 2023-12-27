@@ -28,7 +28,8 @@ const corsOptions = {
     }
 }
 
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
+app.use(cors({ origin: '*' }));
 
 
 // Routing - Rutas
@@ -43,7 +44,6 @@ const servidor = app.listen(PORT, () => {
 })
 
 // Socket.io
-app.use(cors({ origin: '*' }));
 import { Server } from "socket.io"
 
 const io = new Server(servidor, {
